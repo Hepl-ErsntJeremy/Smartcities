@@ -1,4 +1,5 @@
 from ws2812 import WS2812
+from machine import Pin,ADC
 import utime 
 
 BLACK = (0, 0, 0)
@@ -12,10 +13,10 @@ WHITE = (255, 255, 255)
 COLORS = [RED, GREEN, BLUE, YELLOW, CYAN, MAGENTA, WHITE]
 
 led = WS2812(18, 1)
+mic = ADC(Pin(27))  # Microphone sur A1 (GP27)
 
 while True:
-    for color in COLORS:
-        led.pixels_fill(color)
-        led.pixels_show()
-        utime.sleep(0.2)
+    mic_value = mic.read_u16()  # Lecture du micro en format u16 (0-65535)
+    print("Valeur micro:", mic_value)
+    utime.sleep(0.1)
 
